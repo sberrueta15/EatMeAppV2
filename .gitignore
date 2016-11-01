@@ -319,3 +319,8 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 
+*.rsp
+EatMeApp/src/EatMeApp/obj/Debug/netcoreapp1.0/dotnet-compile.rsp
+EatMeApp/src/EatMeApp/bin/Debug/netcoreapp1.0/EatMeApp.dll
+EatMeApp/src/EatMeApp/bin/Debug/netcoreapp1.0/EatMeApp.pdb
+EatMeApp/.vs/EatMeApp/v14/.suo
