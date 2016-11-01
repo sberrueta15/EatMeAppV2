@@ -28,9 +28,21 @@ namespace EatMeApp.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Cooker Get(int id)
         {
-            return "value";
+            Cooker cocinero = new Models.Cooker();
+            cocinero.Nombre = "Rodrigo";
+            cocinero.Apellido = "Suarez";
+            cocinero.Cedula = "4.312.245-7";
+            cocinero.Direccion = "Manuel Albo 2132";
+            cocinero.Mail = "srzsoftware@gmail.com";
+            cocinero.Telefono = "099223445";
+
+
+            _context.Cocineros.Add(cocinero);
+            _context.SaveChanges();
+
+            return cocinero;
         }
 
         // POST api/values
@@ -39,7 +51,17 @@ namespace EatMeApp.Controllers
         {
             try
             {
-                _context.Cocineros.Add(cooker);
+
+                Cooker cocinero = new Models.Cooker();
+                cocinero.Nombre = "Rodrigo";
+                cocinero.Apellido = "Suarez";
+                cocinero.Cedula = "4.312.245-7";
+                cocinero.Direccion = "Manuel Albo 2132";
+                cocinero.Mail = "srzsoftware@gmail.com";
+                cocinero.Telefono = "099223445";
+
+
+                _context.Cocineros.Add(cocinero);
                 _context.SaveChanges();
             }
             catch (Exception ex)
