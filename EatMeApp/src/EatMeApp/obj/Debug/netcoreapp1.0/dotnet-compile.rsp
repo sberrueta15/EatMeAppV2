@@ -1,5 +1,5 @@
---temp-output:C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\
---out:C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\bin\Debug\netcoreapp1.0\EatMeApp.dll
+--temp-output:C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\
+--out:C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\bin\Debug\netcoreapp1.0\EatMeApp.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -186,14 +186,15 @@
 --reference:C:\Users\Santiago\.nuget\packages\System.Threading.Timer\4.0.1\ref\netstandard1.2\System.Threading.Timer.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Xml.ReaderWriter\4.0.11\ref\netstandard1.3\System.Xml.ReaderWriter.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Xml.XDocument\4.0.11\ref\netstandard1.3\System.Xml.XDocument.dll
---resource:"C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\EatMeAppdotnet-compile.deps.json",EatMeApp.deps.json
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Program.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Startup.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Controllers\CocineroController.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Controllers\EventController.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Controllers\ValuesController.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.Designer.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Migrations\AppDbContextModelSnapshot.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Models\AppDbContext.cs
-C:\Users\Santiago\Documents\Visual Studio 2015\Projects\EatMeApp\src\EatMeApp\Models\Event.cs
+--resource:"C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\EatMeAppdotnet-compile.deps.json",EatMeApp.deps.json
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Program.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Startup.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\CocineroController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\EventController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\ValuesController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.Designer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\AppDbContextModelSnapshot.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\AppDbContext.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\Cooker.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\Event.cs
