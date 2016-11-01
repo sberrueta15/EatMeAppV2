@@ -28,31 +28,34 @@ namespace EatMeApp.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Cooker Get(int id)
+        public Cocinero Get(int id)
         {
-            Cooker cocinero = new Models.Cooker();
-            cocinero.Nombre = "Rodrigo";
-            cocinero.Apellido = "Suarez";
-            cocinero.Cedula = "4.312.245-7";
-            cocinero.Direccion = "Manuel Albo 2132";
-            cocinero.Mail = "srzsoftware@gmail.com";
-            cocinero.Telefono = "099223445";
+            //Cooker cocinero = new Models.Cooker();
+            //cocinero.Nombre = "Rodrigo";
+            //cocinero.Apellido = "Suarez";
+            //cocinero.Cedula = "4.312.245-7";
+            //cocinero.Direccion = "Manuel Albo 2132";
+            //cocinero.Mail = "srzsoftware@gmail.com";
+            //cocinero.Telefono = "099223445";
 
 
-            _context.Cocineros.Add(cocinero);
-            _context.SaveChanges();
+            //_context.Cocineros.Add(cocinero);
+            //_context.SaveChanges();
+
+
+            var cocinero = _context.Cocineros.SingleOrDefault(x => x.CocineroId == id);
 
             return cocinero;
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Cooker cooker)
+        public void Post([FromBody]Cocinero cooker)
         {
             try
             {
 
-                Cooker cocinero = new Models.Cooker();
+                Cocinero cocinero = new Models.Cocinero();
                 cocinero.Nombre = "Rodrigo";
                 cocinero.Apellido = "Suarez";
                 cocinero.Cedula = "4.312.245-7";
@@ -74,7 +77,7 @@ namespace EatMeApp.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Cooker cooker)
+        public void Put(int id, [FromBody]Cocinero cooker)
         {
             try
             {
