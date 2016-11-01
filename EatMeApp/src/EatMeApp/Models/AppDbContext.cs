@@ -23,6 +23,7 @@ namespace EatMeApp.Models
         }
 
         public DbSet<Event> Eventos { get; set; }
+        public DbSet<Cooker> Cocineros { get; set; }
 
     }
 }

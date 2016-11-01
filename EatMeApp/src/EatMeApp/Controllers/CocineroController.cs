@@ -35,20 +35,67 @@ namespace EatMeApp.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Cooker cooker)
         {
+            try
+            {
+                _context.Cocineros.Add(cooker);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Cooker cooker)
         {
+            try
+            {
+                var cocinero = _context.Cocineros.SingleOrDefault(x => x.CocineroId == id);
+                if (cocinero != null)
+                {
+                    cocinero = cooker;
+                    _context.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
+            try
+            {
+                var cocinero =_context.Cocineros.SingleOrDefault(x => x.CocineroId == id);
+                if (cocinero != null)
+                {
+                    _context.Cocineros.Remove(cocinero);
+                    _context.SaveChanges();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
         }
     }
 }
