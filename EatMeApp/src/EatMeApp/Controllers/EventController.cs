@@ -61,6 +61,12 @@ namespace EatMeApp.Controllers
         {
             try
             {
+                var maxId = _context.Events.Max(x => x.Id);
+
+                int id = maxId + 1;
+
+                evento.Id = id;
+                
                 _context.Events.Add(evento);
                 _context.SaveChanges();
             }
