@@ -8,42 +8,13 @@ using EatMeApp.Models;
 namespace EatMeApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161103214837_ChangeLanguageAndInheritance")]
+    partial class ChangeLanguageAndInheritance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
-
-            modelBuilder.Entity("EatMeApp.Models.Commensal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("EmailAddress");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("IdentityCard");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("Password");
-
-                    b.Property<string>("Phone");
-
-                    b.Property<int>("PostalCode");
-
-                    b.Property<string>("Preferences");
-
-                    b.Property<string>("Username");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Commnesals");
-                });
 
             modelBuilder.Entity("EatMeApp.Models.Cooker", b =>
                 {

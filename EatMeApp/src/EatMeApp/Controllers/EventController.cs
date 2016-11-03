@@ -42,7 +42,7 @@ namespace EatMeApp.Controllers
                 evento.Title = "Test";
                 evento.TotalTickets = 500;
 
-                _context.Eventos.Add(evento);
+                _context.Events.Add(evento);
                 _context.SaveChanges();
 
                 return evento;
@@ -61,7 +61,7 @@ namespace EatMeApp.Controllers
         {
             try
             {
-                _context.Eventos.Add(evento);
+                _context.Events.Add(evento);
                 _context.SaveChanges();
             }
             catch (Exception ex)

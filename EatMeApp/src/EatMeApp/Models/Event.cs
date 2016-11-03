@@ -11,13 +11,13 @@ namespace EatMeApp.Models
     public class Event
     {
 
-        //[JsonProperty("Cooker")]
-        //public Cooker Cooker  { get; set; }
+        [JsonProperty("Cooker")]
+        public Cooker Cooker { get; set; }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EventId { get; set; }
+        public int Id { get; set; }
 
-        [JsonProperty("Nombre")]
+        [JsonProperty("Title")]
         public string Title { get; set; }
 
         [JsonProperty("Description")]

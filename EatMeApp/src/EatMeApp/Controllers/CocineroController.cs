@@ -10,11 +10,11 @@ using EatMeApp.Models;
 namespace EatMeApp.Controllers
 {
     [Route("api/[controller]")]
-    public class CocineroController : Controller
+    public class CookerController : Controller
     {
 
         public readonly AppDbContext _context;
-        public CocineroController(AppDbContext context)
+        public CookerController(AppDbContext context)
         {
             _context = context;
         }
@@ -28,7 +28,7 @@ namespace EatMeApp.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Cocinero Get(int id)
+        public Cooker Get(int id)
         {
             //Cooker cocinero = new Models.Cooker();
             //cocinero.Nombre = "Rodrigo";
@@ -43,28 +43,28 @@ namespace EatMeApp.Controllers
             //_context.SaveChanges();
 
 
-            var cocinero = _context.Cocineros.SingleOrDefault(x => x.CocineroId == id);
+            var cooker = _context.Cookers.SingleOrDefault(x => x.Id == id);
 
-            return cocinero;
+            return cooker;
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Cocinero cooker)
+        public void Post([FromBody]Cooker cooker)
         {
             try
             {
 
-                Cocinero cocinero = new Models.Cocinero();
-                cocinero.Nombre = "Rodrigo";
-                cocinero.Apellido = "Suarez";
-                cocinero.Cedula = "4.312.245-7";
-                cocinero.Direccion = "Manuel Albo 2132";
-                cocinero.Mail = "srzsoftware@gmail.com";
-                cocinero.Telefono = "099223445";
+                //Cocinero cocinero = new Models.Cocinero();
+                //cocinero.Nombre = "Rodrigo";
+                //cocinero.Apellido = "Suarez";
+                //cocinero.Cedula = "4.312.245-7";
+                //cocinero.Direccion = "Manuel Albo 2132";
+                //cocinero.Mail = "srzsoftware@gmail.com";
+                //cocinero.Telefono = "099223445";
 
 
-                _context.Cocineros.Add(cocinero);
+                _context.Cookers.Add(cooker);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -77,14 +77,14 @@ namespace EatMeApp.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Cocinero cooker)
+        public void Put(int id, [FromBody]Cooker cooker)
         {
             try
             {
-                var cocinero = _context.Cocineros.SingleOrDefault(x => x.CocineroId == id);
-                if (cocinero != null)
+                var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
+                if (cook != null)
                 {
-                    cocinero = cooker;
+                    cook = cooker;
                     _context.SaveChanges();
                 }
 
@@ -106,10 +106,10 @@ namespace EatMeApp.Controllers
 
             try
             {
-                var cocinero =_context.Cocineros.SingleOrDefault(x => x.CocineroId == id);
-                if (cocinero != null)
+                var cook =_context.Cookers.SingleOrDefault(x => x.Id == id);
+                if (cook != null)
                 {
-                    _context.Cocineros.Remove(cocinero);
+                    _context.Cookers.Remove(cook);
                     _context.SaveChanges();
                 }
                 
