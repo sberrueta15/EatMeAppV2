@@ -196,6 +196,8 @@
 "C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103214837_ChangeLanguageAndInheritance.Designer.cs"
 "C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103215012_ChangeLanguageAndInheritanceFix.cs"
 "C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103215012_ChangeLanguageAndInheritanceFix.Designer.cs"
+"C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103223205_RequiredProperties.cs"
+"C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103223205_RequiredProperties.Designer.cs"
 "C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\AppDbContextModelSnapshot.cs"
 "C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Models\AppDbContext.cs"
 "C:\Users\Usuario\Documents\EatMeAppV2\EatMeApp\src\EatMeApp\Models\Commensal.cs"

@@ -41,8 +41,8 @@ namespace EatMeApp.Models
         [JsonProperty("LocationY")]
         public double LocationY { get; set; }
 
-        //[JsonProperty("Commensals")]
-        //public IEnumerable<Commensal> Commensals { get; set; }
+        [JsonProperty("Commensals")]
+        public IEnumerable<Commensal> Commensals { get; set; }
     }
 
     public enum FoodType
