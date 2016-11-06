@@ -11,37 +11,37 @@ namespace EatMeApp.Models
     public class Event
     {
 
-        [JsonProperty("Cooker")]
+        [JsonProperty("cooker")]
         public Cooker Cooker { get; set; }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [JsonProperty("Title")]
+        [JsonProperty("title")]
         public string Title { get; set; }
 
-        [JsonProperty("Description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonProperty("FoodType")]
+        [JsonProperty("foodType")]
         public FoodType FoodType { get; set; }
 
-        [JsonProperty("TicketPrice")]
+        [JsonProperty("ticketPrice")]
         public double TicketPrice { get; set; }
 
-        [JsonProperty("TotalTickets")]
+        [JsonProperty("totalTickets")]
         public int TotalTickets { get; set; }
 
-        [JsonProperty("SoldTickets")]
+        [JsonProperty("soldTickets")]
         public int SoldTickets { get; set; }
 
-        [JsonProperty("LocationX")]
+        [JsonProperty("locationX")]
         public double LocationX { get; set; }
 
-        [JsonProperty("LocationY")]
+        [JsonProperty("locationY")]
         public double LocationY { get; set; }
 
-        [JsonProperty("Commensals")]
+        [JsonProperty("commensals")]
         public IEnumerable<Commensal> Commensals { get; set; }
     }
 

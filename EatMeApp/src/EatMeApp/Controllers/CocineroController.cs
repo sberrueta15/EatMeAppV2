@@ -31,12 +31,14 @@ namespace EatMeApp.Controllers
         public Cooker Get(int id)
         {
             //Cooker cocinero = new Models.Cooker();
+            //cocinero.Id = 1;
             //cocinero.FirstName = "Rodrigo";
             //cocinero.LastName = "Suarez";
             //cocinero.IdentityCard = "4.312.245-7";
             //cocinero.Address = "Manuel Albo 2132";
             //cocinero.EmailAddress = "srzsoftware@gmail.com";
             //cocinero.Phone = "099223445";
+
 
 
             //_context.Cookers.Add(cocinero);
@@ -88,7 +90,17 @@ namespace EatMeApp.Controllers
                 var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
                 if (cook != null)
                 {
-                    cook = cooker;
+                    cook.FirstName = cooker.FirstName;
+                    cook.LastName = cooker.LastName;
+                    cook.Address = cooker.Address;
+                    cook.Bio = cooker.Bio;
+                    cook.EmailAddress = cooker.EmailAddress;
+                    cook.IdentityCard = cooker.IdentityCard;
+                    cook.Password = cooker.Password;
+                    cook.PostalCode = cooker.PostalCode;
+                    cook.Username = cooker.Username;
+                    cook.Phone = cooker.Phone;
+                    
                     _context.SaveChanges();
                 }
 

@@ -10,7 +10,7 @@ namespace EatMeApp.Models
 {
     public class Cooker : User
     {
-        [JsonProperty("Bio")]
+        [JsonProperty("descripcion")]
         public string Bio { get; set; }
     }
 }

@@ -8,39 +8,39 @@ namespace EatMeApp.Models
     public abstract class User
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [JsonProperty("Id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
         [Required]
-        [JsonProperty("FirstName")]
+        [JsonProperty("nombre")]
         public string FirstName { get; set; }
 
         [Required]
-        [JsonProperty("LastName")]
+        [JsonProperty("apellido")]
         public string LastName { get; set; }
 
         [Required]
-        [JsonProperty("EmailAddress")]
+        [JsonProperty("email")]
         public string EmailAddress { get; set; }
 
-        [JsonProperty("Phone")]
+        [JsonProperty("telefono")]
         public string Phone { get; set; }
 
-        [JsonProperty("IdentityCard")]
+        [JsonProperty("cedula")]
         public string IdentityCard { get; set; }
 
-        [JsonProperty("Address")]
+        [JsonProperty("direccion")]
         public string Address { get; set; }
 
-        [JsonProperty("PostalCode")]
+        [JsonProperty("codigo_postal")]
         public int PostalCode { get; set; }
 
         [Required]
-        [JsonProperty("Username")]
+        [JsonProperty("usuario")]
         public string Username { get; set; }
 
         [Required]
-        [JsonProperty("Password")]
+        [JsonProperty("contraseña")]
         public string Password { get; set; }
 
         //[JsonProperty("Events")]

@@ -41,6 +41,8 @@ namespace EatMeApp
 
             services.AddMvc();
 
+            services.AddCors();
+
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
             services.AddDbContext<AppDbContext>(
                 opts => opts.UseNpgsql(connectionString)
@@ -50,6 +52,9 @@ namespace EatMeApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
+            app.UseCors(builder => { builder.WithOrigins("http://54.70.143.222").WithMethods("GET", "PUT", "POST", "DELETE").AllowAnyHeader(); });
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
