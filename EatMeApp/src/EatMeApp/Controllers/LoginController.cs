@@ -1,4 +1,5 @@
 ﻿using EatMeApp.DTOs;
+using EatMeApp.Models;
 using EatMeApp.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -16,16 +18,13 @@ namespace EatMeApp.Controllers
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        private readonly JwtIssuerOptions _jwtOptions;
-        private readonly ILogger _logger;
+        public readonly AppDbContext _context;
+
         private readonly JsonSerializerSettings _serializerSettings;
 
-        public LoginController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory)
+        public LoginController(AppDbContext context)
         {
-            _jwtOptions = jwtOptions.Value;
-            ThrowIfInvalidOptions(_jwtOptions);
-
-            _logger = loggerFactory.CreateLogger<LoginController>();
+            _context = context;
 
             _serializerSettings = new JsonSerializerSettings
             {
@@ -40,61 +39,36 @@ namespace EatMeApp.Controllers
             var identity = await GetClaimsIdentity(LoginDTO);
             if (identity == null)
             {
-                _logger.LogInformation($"Invalid username ({LoginDTO.UserName}) or password ({LoginDTO.Password})");
                 return BadRequest("Invalid credentials");
             }
 
             var claims = new[]
             {
-        new Claim(JwtRegisteredClaimNames.Sub, LoginDTO.UserName),
-        new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-        new Claim(JwtRegisteredClaimNames.Iat,
-                  ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
-                  ClaimValueTypes.Integer64),
-        identity.FindFirst("DisneyCharacter")
-      };
+                new Claim(JwtRegisteredClaimNames.Sub, LoginDTO.UserName),
+                new Claim(JwtRegisteredClaimNames.Iat,
+                          ClaimValueTypes.Integer64),
+                identity.FindFirst("DisneyCharacter")
+              };
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
-                issuer: _jwtOptions.Issuer,
-                audience: _jwtOptions.Audience,
+                issuer: LoginDTO.UserName,
                 claims: claims,
-                notBefore: _jwtOptions.NotBefore,
-                expires: _jwtOptions.Expiration,
-                signingCredentials: _jwtOptions.SigningCredentials);
+                expires: DateTime.Now.AddHours(6));
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             // Serialize and return the response
             var response = new
             {
-                access_token = encodedJwt,
-                expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
+                access_token = encodedJwt
             };
 
             var json = JsonConvert.SerializeObject(response, _serializerSettings);
             return new OkObjectResult(json);
         }
 
-        private static void ThrowIfInvalidOptions(JwtIssuerOptions options)
-        {
-            if (options == null) throw new ArgumentNullException(nameof(options));
-
-            if (options.ValidFor <= TimeSpan.Zero)
-            {
-                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtIssuerOptions.ValidFor));
-            }
-
-            if (options.SigningCredentials == null)
-            {
-                throw new ArgumentNullException(nameof(JwtIssuerOptions.SigningCredentials));
-            }
-
-            if (options.JtiGenerator == null)
-            {
-                throw new ArgumentNullException(nameof(JwtIssuerOptions.JtiGenerator));
-            }
-        }
+        
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
         private static long ToUnixEpochDate(DateTime date)
@@ -103,29 +77,21 @@ namespace EatMeApp.Controllers
                               .TotalSeconds);
 
         /// <summary>
-        /// IMAGINE BIG RED WARNING SIGNS HERE!
         /// You'd want to retrieve claims through your claims provider
         /// in whatever way suits you, the below is purely for demo purposes!
         /// </summary>
-        private static Task<ClaimsIdentity> GetClaimsIdentity(LoginDTO user)
+        private Task<ClaimsIdentity> GetClaimsIdentity(LoginDTO user)
         {
-            if (user.UserName == "MickeyMouse" &&
-                user.Password == "MickeyMouseIsBoss123")
+            var cooker = _context.Cookers.SingleOrDefault(u => u.Username == user.UserName && u.Password == user.Password);
+            
+            if (cooker != null)
             {
                 return Task.FromResult(new ClaimsIdentity(
                   new GenericIdentity(user.UserName, "Token"),
                   new[]
                   {
-            new Claim("DisneyCharacter", "IAmMickey")
+            new Claim("Cooker", user.UserName)
                   }));
-            }
-
-            if (user.UserName == "NotMickeyMouse" &&
-                user.Password == "MickeyMouseIsBoss123")
-            {
-                return Task.FromResult(new ClaimsIdentity(
-                  new GenericIdentity(user.UserName, "Token"),
-                  new Claim[] { }));
             }
 
             // Credentials are invalid, or account doesn't exist
