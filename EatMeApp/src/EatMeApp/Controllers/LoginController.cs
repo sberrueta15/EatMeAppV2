@@ -34,7 +34,7 @@ namespace EatMeApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post([FromForm] LoginDTO LoginDTO)
+        public async Task<IActionResult> Post([FromBody] LoginDTO LoginDTO)
         {
             var identity = await GetClaimsIdentity(LoginDTO);
             if (identity == null)
@@ -96,6 +96,13 @@ namespace EatMeApp.Controllers
 
             // Credentials are invalid, or account doesn't exist
             return Task.FromResult<ClaimsIdentity>(null);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Get()
+        {
+            return Ok(new LoginDTO());
         }
     }
 }
