@@ -25,6 +25,8 @@ namespace EatMeApp.Models
         public DbSet<Event> Events { get; set; }
         public DbSet<Cooker> Cookers { get; set; }
         public DbSet<Commensal> Commnesals { get; set; }
+        public DbSet<EventCommensal> EventCommnesals { get; set; }
+
 
     }
 }
