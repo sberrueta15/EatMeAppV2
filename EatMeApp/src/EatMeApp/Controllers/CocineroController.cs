@@ -133,7 +133,7 @@ namespace EatMeApp.Controllers
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
 
 
