@@ -30,21 +30,6 @@ namespace EatMeApp.Controllers
         [HttpGet("{id}")]
         public Cooker Get(int id)
         {
-            //Cooker cocinero = new Models.Cooker();
-            //cocinero.Id = 1;
-            //cocinero.FirstName = "Rodrigo";
-            //cocinero.LastName = "Suarez";
-            //cocinero.IdentityCard = "4.312.245-7";
-            //cocinero.Address = "Manuel Albo 2132";
-            //cocinero.EmailAddress = "srzsoftware@gmail.com";
-            //cocinero.Phone = "099223445";
-
-
-
-            //_context.Cookers.Add(cocinero);
-            //_context.SaveChanges();
-
-
             var cooker = _context.Cookers.SingleOrDefault(x => x.Id == id);
 
             return cooker;
@@ -56,27 +41,19 @@ namespace EatMeApp.Controllers
         {
             try
             {
-                var maxId = _context.Events.Max(x => x.Id);
+                var maxId = _context.Cookers.Max(x => x.Id);
 
                 int id = maxId + 1;
-
-                Cooker cocinero = new Models.Cooker();
-                cocinero.Id = id;
-                cocinero.FirstName = cooker.FirstName;
-                cocinero.LastName = cooker.LastName;
-                cocinero.IdentityCard = cooker.IdentityCard;
-                cocinero.Address = cooker.Address;
-                cocinero.EmailAddress = cooker.EmailAddress;
-                cocinero.Phone = cooker.Phone;
-
-                _context.Cookers.Add(cocinero);
+                
+                cooker.Id = id;
+                
+                _context.Cookers.Add(cooker);
                 _context.SaveChanges();
 
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
             
         }
@@ -103,12 +80,10 @@ namespace EatMeApp.Controllers
                     
                     _context.SaveChanges();
                 }
-
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
 
@@ -128,11 +103,9 @@ namespace EatMeApp.Controllers
                     _context.Cookers.Remove(cook);
                     _context.SaveChanges();
                 }
-                
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
 

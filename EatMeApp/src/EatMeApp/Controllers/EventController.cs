@@ -36,19 +36,6 @@ namespace EatMeApp.Controllers
         {
             try
             {
-                //Event evento = new Models.Event();
-                //evento.Description = "Descripcion";
-                //evento.FoodType = FoodType.NoRestriction;
-                //evento.LocationX = 54.22321;
-                //evento.LocationY = -23.43252;
-                //evento.SoldTickets = 40;
-                //evento.TicketPrice = 250;
-                //evento.Title = "Test";
-                //evento.TotalTickets = 500;
-
-                //_context.Events.Add(evento);
-                //_context.SaveChanges();
-
                 var evento = _context.Events.SingleOrDefault(x => x.Id == id);
 
                 return evento;
@@ -56,7 +43,7 @@ namespace EatMeApp.Controllers
             catch (Exception ex )
             {
 
-                return null;
+                throw ex;
             }
 
         }
@@ -78,8 +65,7 @@ namespace EatMeApp.Controllers
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
             
 
