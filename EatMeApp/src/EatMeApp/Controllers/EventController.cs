@@ -81,16 +81,14 @@ namespace EatMeApp.Controllers
                 var eventt = _context.Events.SingleOrDefault(x => x.Id == id);
                 if (eventt != null)
                 {
-                    eventt.FirstName = cooker.FirstName;
-                    eventt.LastName = cooker.LastName;
-                    eventt.Address = cooker.Address;
-                    eventt.Bio = cooker.Bio;
-                    eventt.EmailAddress = cooker.EmailAddress;
-                    eventt.IdentityCard = cooker.IdentityCard;
-                    eventt.Password = cooker.Password;
-                    eventt.PostalCode = cooker.PostalCode;
-                    eventt.Username = cooker.Username;
-                    eventt.Phone = cooker.Phone;
+                    eventt.LocationX = value.LocationX;
+                    eventt.LocationY = value.LocationY;
+                    eventt.SoldTickets = value.SoldTickets;
+                    eventt.TicketPrice = value.TicketPrice;
+                    eventt.Title = value.Title;
+                    eventt.TotalTickets = value.TotalTickets;
+                    eventt.Description = value.Description;
+                    eventt.FoodType = value.FoodType;
 
                     _context.SaveChanges();
                 }
