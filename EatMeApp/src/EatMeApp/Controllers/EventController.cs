@@ -74,9 +74,32 @@ namespace EatMeApp.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Event value)
         {
+            try
+            {
+                var eventt = _context.Events.SingleOrDefault(x => x.Id == id);
+                if (eventt != null)
+                {
+                    eventt.FirstName = cooker.FirstName;
+                    eventt.LastName = cooker.LastName;
+                    eventt.Address = cooker.Address;
+                    eventt.Bio = cooker.Bio;
+                    eventt.EmailAddress = cooker.EmailAddress;
+                    eventt.IdentityCard = cooker.IdentityCard;
+                    eventt.Password = cooker.Password;
+                    eventt.PostalCode = cooker.PostalCode;
+                    eventt.Username = cooker.Username;
+                    eventt.Phone = cooker.Phone;
 
+                    _context.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
 
