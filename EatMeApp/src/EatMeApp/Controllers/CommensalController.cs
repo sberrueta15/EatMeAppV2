@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EatMeApp.Models;
+using EatMeApp.Utilities;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,6 +24,7 @@ namespace EatMeApp.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            // TODO
             return new string[] { "value1", "value2" };
         }
 
@@ -30,45 +32,54 @@ namespace EatMeApp.Controllers
         [HttpGet("{id}")]
         public Commensal Get(int id)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
+                try
+                {
 
-                var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == id);
+                    var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == id);
 
-                return commensal;
+                    return commensal;
 
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
-            catch (Exception ex)
+            else
             {
-
-                throw ex;
+                return null;
             }
-
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody]Commensal commensal)
         {
-
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var maxId = _context.Commnesals.Max(x => x.Id);
+                try
+                {
+                    var maxId = _context.Commnesals.Max(x => x.Id);
 
-                maxId = maxId + 1;
+                    maxId = maxId + 1;
 
-                commensal.Id = maxId;
+                    commensal.Id = maxId;
 
-                _context.Commnesals.Add(commensal);
-                _context.SaveChanges();
+                    _context.Commnesals.Add(commensal);
+                    _context.SaveChanges();
 
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
 
 
         }
@@ -77,31 +88,34 @@ namespace EatMeApp.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Commensal commensal)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var com = _context.Commnesals.SingleOrDefault(x => x.Id == id);
-                if (com != null)
+                try
                 {
-                    com.FirstName = commensal.FirstName;
-                    com.LastName = commensal.LastName;
-                    com.Address = commensal.Address;
-                    com.Preferences = commensal.Preferences;
-                    com.EmailAddress = commensal.EmailAddress;
-                    com.IdentityCard = commensal.IdentityCard;
-                    com.Password = commensal.Password;
-                    com.PostalCode = commensal.PostalCode;
-                    com.Username = commensal.Username;
-                    com.Phone = commensal.Phone;
-                    _context.SaveChanges();
+                    var com = _context.Commnesals.SingleOrDefault(x => x.Id == id);
+                    if (com != null)
+                    {
+                        com.FirstName = commensal.FirstName;
+                        com.LastName = commensal.LastName;
+                        com.Address = commensal.Address;
+                        com.Preferences = commensal.Preferences;
+                        com.EmailAddress = commensal.EmailAddress;
+                        com.IdentityCard = commensal.IdentityCard;
+                        com.Password = commensal.Password;
+                        com.PostalCode = commensal.PostalCode;
+                        com.Username = commensal.Username;
+                        com.Phone = commensal.Phone;
+                        _context.SaveChanges();
+                    }
+
                 }
+                catch (Exception ex)
+                {
 
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
 
         }
 
@@ -109,23 +123,25 @@ namespace EatMeApp.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == id);
-                if (commensal != null)
+                try
                 {
-                    _context.Commnesals.Remove(commensal);
-                    _context.SaveChanges();
+                    var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == id);
+                    if (commensal != null)
+                    {
+                        _context.Commnesals.Remove(commensal);
+                        _context.SaveChanges();
+                    }
+
                 }
+                catch (Exception ex)
+                {
 
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
         }
     }
 }

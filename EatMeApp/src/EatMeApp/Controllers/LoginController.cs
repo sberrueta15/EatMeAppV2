@@ -52,7 +52,7 @@ namespace EatMeApp.Controllers
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
-                issuer: LoginDTO.UserName,
+                issuer: identity.Name,
                 claims: claims,
                 expires: DateTime.Now.AddHours(6));
 
@@ -87,7 +87,7 @@ namespace EatMeApp.Controllers
             if (cooker != null)
             {
                 return Task.FromResult(new ClaimsIdentity(
-                  new GenericIdentity(user.UserName, "Token"),
+                  new GenericIdentity(cooker.Id.ToString(), "Token"),
                   new[]
                   {
             new Claim("Cooker", user.UserName)

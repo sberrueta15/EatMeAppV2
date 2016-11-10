@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EatMeApp.Models;
+using System.IdentityModel.Tokens.Jwt;
+using EatMeApp.Utilities;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,10 +25,17 @@ namespace EatMeApp.Controllers
         [HttpGet]
         public List<Event> Get()
         {
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
+            {
+                var listaEventos = _context.Events.ToList();
+                return listaEventos;
+            }
+            else
+            {
+                return null;
+            }
 
-            var listaEventos = _context.Events.ToList();
-
-            return listaEventos;
 
         }
 
@@ -34,17 +43,26 @@ namespace EatMeApp.Controllers
         [HttpGet("{id}")]
         public Event Get(int id)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var evento = _context.Events.SingleOrDefault(x => x.Id == id);
+                try
+                {
+                    var evento = _context.Events.SingleOrDefault(x => x.Id == id);
 
-                return evento;
+                    return evento;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
-            catch (Exception ex )
+            else
             {
-
-                throw ex;
+                return null;
             }
+
 
         }
 
@@ -52,22 +70,26 @@ namespace EatMeApp.Controllers
         [HttpPost]
         public void Post([FromBody]Event evento)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var maxId = _context.Events.Max(x => x.Id);
+                try
+                {
+                    var maxId = _context.Events.Max(x => x.Id);
 
-                int id = maxId + 1;
+                    int id = maxId + 1;
 
-                evento.Id = id;
-                
-                _context.Events.Add(evento);
-                _context.SaveChanges();
+                    evento.Id = id;
+
+                    _context.Events.Add(evento);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            
+
 
 
         }

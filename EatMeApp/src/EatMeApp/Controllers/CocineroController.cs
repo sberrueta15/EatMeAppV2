@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EatMeApp.Models;
+using EatMeApp.Utilities;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,6 +24,7 @@ namespace EatMeApp.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            // TODO
             return new string[] { "value1", "value2" };
         }
 
@@ -30,86 +32,99 @@ namespace EatMeApp.Controllers
         [HttpGet("{id}")]
         public Cooker Get(int id)
         {
-            var cooker = _context.Cookers.SingleOrDefault(x => x.Id == id);
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
+            {
+                var cooker = _context.Cookers.SingleOrDefault(x => x.Id == id);
 
-            return cooker;
+                return cooker;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody]Cooker cooker)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var maxId = _context.Cookers.Max(x => x.Id);
+                try
+                {
+                    var maxId = _context.Cookers.Max(x => x.Id);
 
-                int id = maxId + 1;
-                
-                cooker.Id = id;
-                
-                _context.Cookers.Add(cooker);
-                _context.SaveChanges();
+                    int id = maxId + 1;
 
+                    cooker.Id = id;
+
+                    _context.Cookers.Add(cooker);
+                    _context.SaveChanges();
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Cooker cooker)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
-                if (cook != null)
+                try
                 {
-                    cook.FirstName = cooker.FirstName;
-                    cook.LastName = cooker.LastName;
-                    cook.Address = cooker.Address;
-                    cook.Bio = cooker.Bio;
-                    cook.EmailAddress = cooker.EmailAddress;
-                    cook.IdentityCard = cooker.IdentityCard;
-                    cook.Password = cooker.Password;
-                    cook.PostalCode = cooker.PostalCode;
-                    cook.Username = cooker.Username;
-                    cook.Phone = cooker.Phone;
-                    
-                    _context.SaveChanges();
+                    var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
+                    if (cook != null)
+                    {
+                        cook.FirstName = cooker.FirstName;
+                        cook.LastName = cooker.LastName;
+                        cook.Address = cooker.Address;
+                        cook.Bio = cooker.Bio;
+                        cook.EmailAddress = cooker.EmailAddress;
+                        cook.IdentityCard = cooker.IdentityCard;
+                        cook.Password = cooker.Password;
+                        cook.PostalCode = cooker.PostalCode;
+                        cook.Username = cooker.Username;
+                        cook.Phone = cooker.Phone;
+
+                        _context.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-
-
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                var cook =_context.Cookers.SingleOrDefault(x => x.Id == id);
-                if (cook != null)
+                try
                 {
-                    _context.Cookers.Remove(cook);
-                    _context.SaveChanges();
+                    var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
+                    if (cook != null)
+                    {
+                        _context.Cookers.Remove(cook);
+                        _context.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-
         }
     }
 }
