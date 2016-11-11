@@ -224,7 +224,34 @@ namespace EatMeApp.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
+            {
+                try
+                {
+                    var evento = _context.Events.SingleOrDefault(x => x.Id == id);
 
+                    var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
+
+                    foreach (var item in listaEventCommensal)
+                    {
+                        _context.EventCommnesals.Remove(item);
+                    }
+
+                    _context.Events.Remove(evento);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
+            }
+            else
+            {
+                return;
+            }
 
         }
     }
