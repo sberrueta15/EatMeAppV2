@@ -38,6 +38,26 @@ namespace EatMeApp.Controllers
             {
                 var evento = _context.Events.SingleOrDefault(x => x.Id == id);
 
+                var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
+
+                List<Commensal> listaDeCommensales = new List<Models.Commensal>();
+                if (listaEventCommensal != null)
+                {
+                    foreach (var item in listaEventCommensal)
+                    {
+                        var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == item.CommensalId);
+                        if (commensal != null)
+                        {
+                            listaDeCommensales.Add(commensal);
+                        }
+                    }
+                }
+
+                if (listaDeCommensales.Count > 0)
+                {
+                    evento.Commensals = listaDeCommensales;
+                }
+
                 return evento;
             }
             catch (Exception ex )
@@ -49,8 +69,8 @@ namespace EatMeApp.Controllers
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody]Event evento)
+        [HttpPost("{idCooker}")]
+        public void Post(int idCooker,[FromBody]Event evento)
         {
             try
             {
@@ -58,6 +78,15 @@ namespace EatMeApp.Controllers
 
                 int id = maxId + 1;
 
+
+                var cooker = _context.Cookers.SingleOrDefault(x => x.Id == idCooker);
+
+                if (cooker == null)
+                {
+                    return;
+                }
+
+                evento.Cooker = cooker;
                 evento.Id = id;
                 
                 _context.Events.Add(evento);
@@ -100,6 +129,69 @@ namespace EatMeApp.Controllers
             }
 
         }
+
+        // PUT api/values/5
+        [HttpPut("asignarcomensal/{idCommensal}/{idEvento}")]
+        public void AsignarCommensalAEvento(int idCommensal, int idEvento)
+        {
+            try
+            {
+                var eventt = _context.Events.SingleOrDefault(x => x.Id == idEvento);
+                if (eventt != null)
+                {
+                    eventt.SoldTickets = eventt.SoldTickets + 1;
+
+                    var maxId = _context.EventCommnesals.Max(x => x.Id);
+
+                    var eventCommensalId = maxId + 1;
+
+                    EventCommensal eventCommensal = new Models.EventCommensal();
+                    eventCommensal.Id = eventCommensalId;
+                    eventCommensal.CommensalId = idCommensal;
+                    eventCommensal.EventId = idEvento;
+
+                    _context.EventCommnesals.Add(eventCommensal);
+                    _context.SaveChanges();
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        // PUT api/values/5
+        [HttpPut("desasignarcomensal/{idCommensal}/{idEvento}")]
+        public void DesasignarCommensalAEvento(int idCommensal, int idEvento)
+        {
+            try
+            {
+                var eventt = _context.Events.SingleOrDefault(x => x.Id == idEvento);
+                if (eventt != null)
+                {
+                    eventt.SoldTickets = eventt.SoldTickets - 1;
+
+                    var eventCommensal = _context.EventCommnesals.SingleOrDefault(x => x.EventId == idEvento && x.CommensalId == idCommensal);
+                    if (eventCommensal != null)
+                    {
+                        _context.EventCommnesals.Remove(eventCommensal);
+                        _context.SaveChanges();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
         // DELETE api/values/5
         [HttpDelete("{id}")]

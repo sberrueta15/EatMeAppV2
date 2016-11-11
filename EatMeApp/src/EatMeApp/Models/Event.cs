@@ -42,6 +42,7 @@ namespace EatMeApp.Models
         public double LocationY { get; set; }
 
         [JsonProperty("commensals")]
+        [NotMapped]
         public IEnumerable<Commensal> Commensals { get; set; }
     }
 
