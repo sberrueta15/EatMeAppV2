@@ -164,7 +164,7 @@ namespace EatMeApp.Controllers
 
         private bool Exists(User user)
         {
-            var dbUsers = _context.Cookers.Select(x => x.Username == user.Username);
+            var dbUsers = _context.Cookers.Where(x => x.Username == user.Username);
             if (dbUsers.Count() > 1)
             {
                 return true;
