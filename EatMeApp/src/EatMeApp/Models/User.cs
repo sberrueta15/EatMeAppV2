@@ -19,6 +19,7 @@ namespace EatMeApp.Models
         [JsonProperty("apellido")]
         public string LastName { get; set; }
 
+        [EmailAddress]
         [Required]
         [JsonProperty("email")]
         public string EmailAddress { get; set; }
@@ -34,7 +35,7 @@ namespace EatMeApp.Models
 
         [JsonProperty("codigo_postal")]
         public int PostalCode { get; set; }
-
+        
         [Required]
         [JsonProperty("usuario")]
         public string Username { get; set; }

@@ -16,5 +16,10 @@ namespace EatMeApp.DTOs
         /// User password
         /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// Application
+        /// </summary>
+        public string app { get; set; }
     }
 }

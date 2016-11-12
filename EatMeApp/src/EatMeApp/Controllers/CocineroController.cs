@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EatMeApp.Models;
 using EatMeApp.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,41 +34,64 @@ namespace EatMeApp.Controllers
         public Cooker Get(int id)
         {
             var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                var cooker = _context.Cookers.SingleOrDefault(x => x.Id == id);
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
+                {
+                    var cooker = _context.Cookers.SingleOrDefault(x => x.Id == id);
 
-                return cooker;
+                    return cooker;
+                }
             }
-            else
+            return null;
+        }
+
+        // GET api/values/5
+        [HttpGet("{id}/events")]
+        public List<Event> GetEvents(int id)
+        {
+            var token = Request.Headers["Authorization"].ToString();
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                return null;
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
+                {
+                    var events = _context.Events.Where(x => x.Cooker.Id == id).ToList();
+
+                    return events;
+                }
             }
+            return null;
         }
 
         // POST api/values
         [HttpPost]
+        [AllowAnonymous]
         public void Post([FromBody]Cooker cooker)
         {
-            var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!Exists(cooker))
             {
-                try
-                {
-                    var maxId = _context.Cookers.Max(x => x.Id);
+                //var token = Request.Headers["Authorization"].ToString();
+                //if (Authorizer.HasAccess(token, _context))
+                //{
+                    try
+                    {
+                        var maxId = _context.Cookers.Max(x => x.Id);
 
-                    int id = maxId + 1;
+                        int id = maxId + 1;
 
-                    cooker.Id = id;
+                        cooker.Id = id;
 
-                    _context.Cookers.Add(cooker);
-                    _context.SaveChanges();
+                        _context.Cookers.Add(cooker);
+                        _context.SaveChanges();
 
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                //}
             }
         }
 
@@ -75,31 +99,38 @@ namespace EatMeApp.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Cooker cooker)
         {
-            var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!Exists(cooker))
             {
-                try
+                var token = Request.Headers["Authorization"].ToString();
+                if (!string.IsNullOrWhiteSpace(token))
                 {
-                    var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
-                    if (cook != null)
+                    token = token.Substring(7);
+                    if (Authorizer.HasAccess(token, _context))
                     {
-                        cook.FirstName = cooker.FirstName;
-                        cook.LastName = cooker.LastName;
-                        cook.Address = cooker.Address;
-                        cook.Bio = cooker.Bio;
-                        cook.EmailAddress = cooker.EmailAddress;
-                        cook.IdentityCard = cooker.IdentityCard;
-                        cook.Password = cooker.Password;
-                        cook.PostalCode = cooker.PostalCode;
-                        cook.Username = cooker.Username;
-                        cook.Phone = cooker.Phone;
+                        try
+                        {
+                            var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
+                            if (cook != null)
+                            {
+                                cook.FirstName = cooker.FirstName;
+                                cook.LastName = cooker.LastName;
+                                cook.Address = cooker.Address;
+                                cook.Bio = cooker.Bio;
+                                cook.EmailAddress = cooker.EmailAddress;
+                                cook.IdentityCard = cooker.IdentityCard;
+                                cook.Password = cooker.Password;
+                                cook.PostalCode = cooker.PostalCode;
+                                cook.Username = cooker.Username;
+                                cook.Phone = cooker.Phone;
 
-                        _context.SaveChanges();
+                                _context.SaveChanges();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
                 }
             }
         }
@@ -109,22 +140,36 @@ namespace EatMeApp.Controllers
         public void Delete(int id)
         {
             var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                try
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
                 {
-                    var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
-                    if (cook != null)
+                    try
                     {
-                        _context.Cookers.Remove(cook);
-                        _context.SaveChanges();
+                        var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
+                        if (cook != null)
+                        {
+                            _context.Cookers.Remove(cook);
+                            _context.SaveChanges();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
                     }
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
             }
+        }
+
+        private bool Exists(User user)
+        {
+            var dbUsers = _context.Cookers.Select(x => x.Username == user.Username);
+            if (dbUsers.Count() > 1)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
