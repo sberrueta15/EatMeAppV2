@@ -22,7 +22,11 @@ namespace EatMeApp.Models
             optionsBuilder.UseNpgsql("User ID=postgres;Password=santiago;Host=localhost;Port=5432;Database=EatMeApp;Pooling=true;");
         }
 
-        public DbSet<Event> Eventos { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Cooker> Cookers { get; set; }
+        public DbSet<Commensal> Commnesals { get; set; }
+        public DbSet<EventCommensal> EventCommnesals { get; set; }
+
 
     }
 }

@@ -8,9 +8,10 @@ using EatMeApp.Models;
 namespace EatMeApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161103215012_ChangeLanguageAndInheritanceFix")]
+    partial class ChangeLanguageAndInheritanceFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
@@ -22,21 +23,15 @@ namespace EatMeApp.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("EmailAddress")
-                        .IsRequired();
+                    b.Property<string>("EmailAddress");
 
-                    b.Property<int?>("EventId");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<string>("FirstName");
 
                     b.Property<string>("IdentityCard");
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
+                    b.Property<string>("LastName");
 
-                    b.Property<string>("Password")
-                        .IsRequired();
+                    b.Property<string>("Password");
 
                     b.Property<string>("Phone");
 
@@ -44,12 +39,9 @@ namespace EatMeApp.Migrations
 
                     b.Property<string>("Preferences");
 
-                    b.Property<string>("Username")
-                        .IsRequired();
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventId");
 
                     b.ToTable("Commnesals");
                 });
@@ -63,26 +55,21 @@ namespace EatMeApp.Migrations
 
                     b.Property<string>("Bio");
 
-                    b.Property<string>("EmailAddress")
-                        .IsRequired();
+                    b.Property<string>("EmailAddress");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<string>("FirstName");
 
                     b.Property<string>("IdentityCard");
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
+                    b.Property<string>("LastName");
 
-                    b.Property<string>("Password")
-                        .IsRequired();
+                    b.Property<string>("Password");
 
                     b.Property<string>("Phone");
 
                     b.Property<int>("PostalCode");
 
-                    b.Property<string>("Username")
-                        .IsRequired();
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
@@ -117,27 +104,6 @@ namespace EatMeApp.Migrations
                     b.HasIndex("CookerId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("EatMeApp.Models.EventCommensal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CommensalId");
-
-                    b.Property<int>("EventId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EventCommnesals");
-                });
-
-            modelBuilder.Entity("EatMeApp.Models.Commensal", b =>
-                {
-                    b.HasOne("EatMeApp.Models.Event")
-                        .WithMany("Commensals")
-                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("EatMeApp.Models.Event", b =>

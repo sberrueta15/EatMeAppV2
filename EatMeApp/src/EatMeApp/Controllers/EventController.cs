@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EatMeApp.Models;
+using System.IdentityModel.Tokens.Jwt;
+using EatMeApp.Utilities;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,72 +23,235 @@ namespace EatMeApp.Controllers
 
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<Event> Get()
         {
-            return new string[] { "value1", "value2" };
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
+            {
+                var listaEventos = _context.Events.ToList();
+                return listaEventos;
+            }
+            else
+            {
+                return null;
+            }
+
+
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Event Get(int id)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                Event evento = new Models.Event();
-                evento.Description = "Descripcion";
-                evento.FoodType = FoodType.NoRestriction;
-                evento.LocationX = 54.22321;
-                evento.LocationY = -23.43252;
-                evento.SoldTickets = 40;
-                evento.TicketPrice = 250;
-                evento.Title = "Test";
-                evento.TotalTickets = 500;
+                try
+                {
+                    var evento = _context.Events.SingleOrDefault(x => x.Id == id);
 
-                _context.Eventos.Add(evento);
-                _context.SaveChanges();
+                    var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
 
-                return evento;
+                    List<Commensal> listaDeCommensales = new List<Models.Commensal>();
+                    if (listaEventCommensal != null)
+                    {
+                        foreach (var item in listaEventCommensal)
+                        {
+                            var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == item.CommensalId);
+                            if (commensal != null)
+                            {
+                                listaDeCommensales.Add(commensal);
+                            }
+                        }
+                    }
+
+                    if (listaDeCommensales.Count > 0)
+                    {
+                        evento.Commensals = listaDeCommensales;
+                    }
+
+                    return evento;
+
+                    
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
             }
-            catch (Exception ex )
+            else
             {
-
                 return null;
             }
+
 
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody]Event evento)
+        [HttpPost("{idCooker}")]
+        public void Post(int idCooker,[FromBody]Event evento)
         {
-            try
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
             {
-                _context.Eventos.Add(evento);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    var maxId = _context.Events.Max(x => x.Id);
 
-                throw;
+                    int id = maxId + 1;
+
+                    var cooker = _context.Cookers.SingleOrDefault(x => x.Id == idCooker);
+
+                    if (cooker == null)
+                    {
+                        return;
+                    }
+
+                    evento.Cooker = cooker;
+                    evento.Id = id;
+
+                    _context.Events.Add(evento);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
+            else
+            {
+                return;
+            }
+
             
-
-
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Event value)
         {
+            try
+            {
+                var eventt = _context.Events.SingleOrDefault(x => x.Id == id);
+                if (eventt != null)
+                {
+                    eventt.LocationX = value.LocationX;
+                    eventt.LocationY = value.LocationY;
+                    eventt.SoldTickets = value.SoldTickets;
+                    eventt.TicketPrice = value.TicketPrice;
+                    eventt.Title = value.Title;
+                    eventt.TotalTickets = value.TotalTickets;
+                    eventt.Description = value.Description;
+                    eventt.FoodType = value.FoodType;
 
+                    _context.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
+
+        // PUT api/values/5
+        [HttpPut("asignarcomensal/{idCommensal}/{idEvento}")]
+        public void AsignarCommensalAEvento(int idCommensal, int idEvento)
+        {
+            try
+            {
+                var eventt = _context.Events.SingleOrDefault(x => x.Id == idEvento);
+                if (eventt != null)
+                {
+                    eventt.SoldTickets = eventt.SoldTickets + 1;
+
+                    var maxId = _context.EventCommnesals.Max(x => x.Id);
+
+                    var eventCommensalId = maxId + 1;
+
+                    EventCommensal eventCommensal = new Models.EventCommensal();
+                    eventCommensal.Id = eventCommensalId;
+                    eventCommensal.CommensalId = idCommensal;
+                    eventCommensal.EventId = idEvento;
+
+                    _context.EventCommnesals.Add(eventCommensal);
+                    _context.SaveChanges();
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        // PUT api/values/5
+        [HttpPut("desasignarcomensal/{idCommensal}/{idEvento}")]
+        public void DesasignarCommensalAEvento(int idCommensal, int idEvento)
+        {
+            try
+            {
+                var eventt = _context.Events.SingleOrDefault(x => x.Id == idEvento);
+                if (eventt != null)
+                {
+                    eventt.SoldTickets = eventt.SoldTickets - 1;
+
+                    var eventCommensal = _context.EventCommnesals.SingleOrDefault(x => x.EventId == idEvento && x.CommensalId == idCommensal);
+                    if (eventCommensal != null)
+                    {
+                        _context.EventCommnesals.Remove(eventCommensal);
+                        _context.SaveChanges();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var token = Request.Headers["Authorization"].ToString();
+            if (Authorizer.HasAccess(token, _context))
+            {
+                try
+                {
+                    var evento = _context.Events.SingleOrDefault(x => x.Id == id);
 
+                    var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
+
+                    foreach (var item in listaEventCommensal)
+                    {
+                        _context.EventCommnesals.Remove(item);
+                    }
+
+                    _context.Events.Remove(evento);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
+            }
+            else
+            {
+                return;
+            }
 
         }
     }

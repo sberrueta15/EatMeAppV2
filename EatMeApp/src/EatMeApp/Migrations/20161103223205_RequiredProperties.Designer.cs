@@ -8,9 +8,10 @@ using EatMeApp.Models;
 namespace EatMeApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161103223205_RequiredProperties")]
+    partial class RequiredProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
@@ -117,20 +118,6 @@ namespace EatMeApp.Migrations
                     b.HasIndex("CookerId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("EatMeApp.Models.EventCommensal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CommensalId");
-
-                    b.Property<int>("EventId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EventCommnesals");
                 });
 
             modelBuilder.Entity("EatMeApp.Models.Commensal", b =>

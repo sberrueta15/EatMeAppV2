@@ -1,5 +1,5 @@
---temp-output:c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\
---out:c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\bin\Debug\netcoreapp1.0\EatMeApp.dll
+--temp-output:C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\
+--out:C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\bin\Debug\netcoreapp1.0\EatMeApp.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -91,6 +91,8 @@
 --reference:C:\Users\Santiago\.nuget\packages\Microsoft.Extensions.PlatformAbstractions\1.0.0\lib\netstandard1.3\Microsoft.Extensions.PlatformAbstractions.dll
 --reference:C:\Users\Santiago\.nuget\packages\Microsoft.Extensions.Primitives\1.0.0\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll
 --reference:C:\Users\Santiago\.nuget\packages\Microsoft.Extensions.WebEncoders\1.0.0\lib\netstandard1.0\Microsoft.Extensions.WebEncoders.dll
+--reference:C:\Users\Santiago\.nuget\packages\Microsoft.IdentityModel.Logging\1.0.0\lib\netstandard1.4\Microsoft.IdentityModel.Logging.dll
+--reference:C:\Users\Santiago\.nuget\packages\Microsoft.IdentityModel.Tokens\5.0.0\lib\netstandard1.4\Microsoft.IdentityModel.Tokens.dll
 --reference:C:\Users\Santiago\.nuget\packages\Microsoft.Net.Http.Headers\1.0.0\lib\netstandard1.1\Microsoft.Net.Http.Headers.dll
 --reference:C:\Users\Santiago\.nuget\packages\Microsoft.VisualBasic\10.0.1\ref\netstandard1.1\Microsoft.VisualBasic.dll
 --reference:C:\Users\Santiago\.nuget\packages\Microsoft.Win32.Primitives\4.0.1\ref\netstandard1.3\Microsoft.Win32.Primitives.dll
@@ -122,6 +124,7 @@
 --reference:C:\Users\Santiago\.nuget\packages\System.Globalization\4.0.11\ref\netstandard1.3\System.Globalization.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Globalization.Calendars\4.0.1\ref\netstandard1.3\System.Globalization.Calendars.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Globalization.Extensions\4.0.1\ref\netstandard1.3\System.Globalization.Extensions.dll
+--reference:C:\Users\Santiago\.nuget\packages\System.IdentityModel.Tokens.Jwt\5.0.0\lib\netstandard1.4\System.IdentityModel.Tokens.Jwt.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Interactive.Async\3.0.0\lib\netstandard1.0\System.Interactive.Async.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.IO\4.1.0\ref\netstandard1.5\System.IO.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.IO.Compression\4.1.0\ref\netstandard1.3\System.IO.Compression.dll
@@ -167,6 +170,8 @@
 --reference:C:\Users\Santiago\.nuget\packages\System.Runtime.Serialization.Primitives\4.1.1\ref\netstandard1.3\System.Runtime.Serialization.Primitives.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Security.Claims\4.0.1\ref\netstandard1.3\System.Security.Claims.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Security.Cryptography.Algorithms\4.2.0\ref\netstandard1.6\System.Security.Cryptography.Algorithms.dll
+--reference:C:\Users\Santiago\.nuget\packages\System.Security.Cryptography.Cng\4.2.0\ref\netstandard1.6\System.Security.Cryptography.Cng.dll
+--reference:C:\Users\Santiago\.nuget\packages\System.Security.Cryptography.Csp\4.0.0\ref\netstandard1.3\System.Security.Cryptography.Csp.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Security.Cryptography.Encoding\4.0.0\ref\netstandard1.3\System.Security.Cryptography.Encoding.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Security.Cryptography.Primitives\4.0.0\ref\netstandard1.3\System.Security.Cryptography.Primitives.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Security.Cryptography.X509Certificates\4.1.0\ref\netstandard1.4\System.Security.Cryptography.X509Certificates.dll
@@ -186,14 +191,33 @@
 --reference:C:\Users\Santiago\.nuget\packages\System.Threading.Timer\4.0.1\ref\netstandard1.2\System.Threading.Timer.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Xml.ReaderWriter\4.0.11\ref\netstandard1.3\System.Xml.ReaderWriter.dll
 --reference:C:\Users\Santiago\.nuget\packages\System.Xml.XDocument\4.0.11\ref\netstandard1.3\System.Xml.XDocument.dll
---resource:"c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\EatMeAppdotnet-compile.deps.json",EatMeApp.deps.json
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Program.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Startup.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Controllers\CocineroController.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Controllers\EventController.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Controllers\ValuesController.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.Designer.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Migrations\AppDbContextModelSnapshot.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Models\AppDbContext.cs
-c:\Users\Santiago\documents\visual studio 2015\Projects\EatMeApp\src\EatMeApp\Models\Event.cs
+--resource:"C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\obj\Debug\netcoreapp1.0\EatMeAppdotnet-compile.deps.json",EatMeApp.deps.json
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Program.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Startup.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\CocineroController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\CommensalController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\EventController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\LoginController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Controllers\ValuesController.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\DTOs\LoginDTO.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161027213934_InitialMigration.Designer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161101230556_CocineroAdded.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161101230556_CocineroAdded.Designer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103214837_ChangeLanguageAndInheritance.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103214837_ChangeLanguageAndInheritance.Designer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103215012_ChangeLanguageAndInheritanceFix.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103215012_ChangeLanguageAndInheritanceFix.Designer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103223205_RequiredProperties.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161103223205_RequiredProperties.Designer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161108235004_EventCommensals.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\20161108235004_EventCommensals.Designer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Migrations\AppDbContextModelSnapshot.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\AppDbContext.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\Commensal.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\Cooker.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\Event.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\EventCommensal.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Models\User.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Utilities\Authorizer.cs
+C:\Users\Santiago\Documents\GitHub\EatMeAppV2\EatMeApp\src\EatMeApp\Utilities\JwtIssuerOptions.cs

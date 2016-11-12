@@ -11,11 +11,11 @@ using EatMeApp.Utilities;
 namespace EatMeApp.Controllers
 {
     [Route("api/[controller]")]
-    public class CookerController : Controller
+    public class CommensalController : Controller
     {
 
         public readonly AppDbContext _context;
-        public CookerController(AppDbContext context)
+        public CommensalController(AppDbContext context)
         {
             _context = context;
         }
@@ -30,14 +30,24 @@ namespace EatMeApp.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Cooker Get(int id)
+        public Commensal Get(int id)
         {
             var token = Request.Headers["Authorization"].ToString();
             if (Authorizer.HasAccess(token, _context))
             {
-                var cooker = _context.Cookers.SingleOrDefault(x => x.Id == id);
+                try
+                {
 
-                return cooker;
+                    var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == id);
+
+                    return commensal;
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
             else
             {
@@ -47,61 +57,66 @@ namespace EatMeApp.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Cooker cooker)
+        public void Post([FromBody]Commensal commensal)
         {
             var token = Request.Headers["Authorization"].ToString();
             if (Authorizer.HasAccess(token, _context))
             {
                 try
                 {
-                    var maxId = _context.Cookers.Max(x => x.Id);
+                    var maxId = _context.Commnesals.Max(x => x.Id);
 
-                    int id = maxId + 1;
+                    maxId = maxId + 1;
 
-                    cooker.Id = id;
+                    commensal.Id = maxId;
 
-                    _context.Cookers.Add(cooker);
+                    _context.Commnesals.Add(commensal);
                     _context.SaveChanges();
 
                 }
                 catch (Exception ex)
                 {
+
                     throw ex;
                 }
             }
+
+
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Cooker cooker)
+        public void Put(int id, [FromBody]Commensal commensal)
         {
             var token = Request.Headers["Authorization"].ToString();
             if (Authorizer.HasAccess(token, _context))
             {
                 try
                 {
-                    var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
-                    if (cook != null)
+                    var com = _context.Commnesals.SingleOrDefault(x => x.Id == id);
+                    if (com != null)
                     {
-                        cook.FirstName = cooker.FirstName;
-                        cook.LastName = cooker.LastName;
-                        cook.Address = cooker.Address;
-                        cook.Bio = cooker.Bio;
-                        cook.EmailAddress = cooker.EmailAddress;
-                        cook.IdentityCard = cooker.IdentityCard;
-                        cook.Password = cooker.Password;
-                        cook.PostalCode = cooker.PostalCode;
-                        cook.Username = cooker.Username;
-                        cook.Phone = cooker.Phone;
-
+                        com.FirstName = commensal.FirstName;
+                        com.LastName = commensal.LastName;
+                        com.Address = commensal.Address;
+                        com.Preferences = commensal.Preferences;
+                        com.EmailAddress = commensal.EmailAddress;
+                        com.IdentityCard = commensal.IdentityCard;
+                        com.Password = commensal.Password;
+                        com.PostalCode = commensal.PostalCode;
+                        com.Username = commensal.Username;
+                        com.Phone = commensal.Phone;
                         _context.SaveChanges();
                     }
+
                 }
                 catch (Exception ex)
                 {
+
                     throw ex;
                 }
             }
+
         }
 
         // DELETE api/values/5
@@ -113,15 +128,17 @@ namespace EatMeApp.Controllers
             {
                 try
                 {
-                    var cook = _context.Cookers.SingleOrDefault(x => x.Id == id);
-                    if (cook != null)
+                    var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == id);
+                    if (commensal != null)
                     {
-                        _context.Cookers.Remove(cook);
+                        _context.Commnesals.Remove(commensal);
                         _context.SaveChanges();
                     }
+
                 }
                 catch (Exception ex)
                 {
+
                     throw ex;
                 }
             }
