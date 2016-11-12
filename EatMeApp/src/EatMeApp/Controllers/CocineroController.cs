@@ -70,7 +70,7 @@ namespace EatMeApp.Controllers
         [AllowAnonymous]
         public void Post([FromBody]Cooker cooker)
         {
-            if (!Exists(cooker))
+            if (!Exists(cooker, "post"))
             {
                 //var token = Request.Headers["Authorization"].ToString();
                 //if (Authorizer.HasAccess(token, _context))
@@ -93,13 +93,17 @@ namespace EatMeApp.Controllers
                     }
                 //}
             }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Cooker cooker)
         {
-            if (!Exists(cooker))
+            if (!Exists(cooker, "put"))
             {
                 var token = Request.Headers["Authorization"].ToString();
                 if (!string.IsNullOrWhiteSpace(token))
@@ -162,10 +166,15 @@ namespace EatMeApp.Controllers
             }
         }
 
-        private bool Exists(User user)
+        private bool Exists(User user, string postPut)
         {
             var dbUsers = _context.Cookers.Where(x => x.Username == user.Username);
-            if (dbUsers.Count() > 1)
+            if (dbUsers.Count() > 1 && postPut.Equals("put"))
+            {
+                return true;
+            }
+
+            if (dbUsers.Count() > 0 && postPut.Equals("post"))
             {
                 return true;
             }
