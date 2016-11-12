@@ -19,7 +19,7 @@ namespace EatMeApp.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("User ID=postgres;Password=santiago;Host=localhost;Port=5432;Database=EatMeApp;Pooling=true;");
+            optionsBuilder.UseNpgsql("User ID=postgres;Password=sa;Host=localhost;Port=5432;Database=EatMeApp;Pooling=true;");
         }
 
         public DbSet<Event> Events { get; set; }

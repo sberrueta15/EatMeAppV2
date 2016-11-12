@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using EatMeApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace EatMeApp
 {
@@ -16,6 +17,20 @@ namespace EatMeApp
     {
         public Startup(IHostingEnvironment env)
         {
+
+            string mapPath = System.AppContext.BaseDirectory;
+            string logPath = Path.Combine((mapPath), "log.log");
+
+            if (!File.Exists(logPath))
+            {
+                File.Create(logPath).Dispose();
+            }
+
+            Log.GetInstance().Init(logPath);
+
+            Log.GetInstance().DoLog("Web Service Iniciado");
+
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)

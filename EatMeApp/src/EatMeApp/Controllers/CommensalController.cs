@@ -24,6 +24,7 @@ namespace EatMeApp.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            Log.GetInstance().DoLog("Entro a Get de CommensalController");
             // TODO
             return new string[] { "value1", "value2" };
         }
