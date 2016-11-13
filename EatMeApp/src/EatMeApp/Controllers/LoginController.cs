@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
+using System.Dynamic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -58,14 +59,29 @@ namespace EatMeApp.Controllers
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
+            
+
+            User dbUser;
+            if (LoginDTO.app.Equals("cooker"))
+            {
+                dbUser = _context.Cookers.SingleOrDefault(u => u.Username == LoginDTO.UserName && u.Password == LoginDTO.Password);
+            }
+            else
+            {
+                dbUser = _context.Commnesals.SingleOrDefault(u => u.Username == LoginDTO.UserName && u.Password == LoginDTO.Password);
+            }
+            
+
+            //var json = JsonConvert.SerializeObject(response, _serializerSettings);
             // Serialize and return the response
             var response = new
             {
-                access_token = encodedJwt
+                access_token = encodedJwt,
+                user = dbUser
             };
+            //dynamic x = new { access_token = encodedJwt, user = dbUser };
 
-            var json = JsonConvert.SerializeObject(response, _serializerSettings);
-            return new OkObjectResult(json);
+            return new OkObjectResult(response);
         }
 
         
@@ -82,20 +98,40 @@ namespace EatMeApp.Controllers
         /// </summary>
         private Task<ClaimsIdentity> GetClaimsIdentity(LoginDTO user)
         {
-            var cooker = _context.Cookers.SingleOrDefault(u => u.Username == user.UserName && u.Password == user.Password);
-            
-            if (cooker != null)
+            if (user.app.Equals("cooker"))
             {
-                return Task.FromResult(new ClaimsIdentity(
-                  new GenericIdentity(cooker.Id.ToString(), "Token"),
-                  new[]
-                  {
-            new Claim("Cooker", user.UserName)
-                  }));
+                var cooker = _context.Cookers.SingleOrDefault(u => u.Username == user.UserName && u.Password == user.Password);
+                if (cooker != null)
+                {
+                    return Task.FromResult(new ClaimsIdentity(
+                      new GenericIdentity(cooker.Id.ToString(), "Token"),
+                      new[]
+                      {
+            new Claim("User", user.UserName)
+                      }));
+                }
+
+                // Credentials are invalid, or account doesn't exist
+                return Task.FromResult<ClaimsIdentity>(null);
+            }
+            else
+            {
+                var commensal = _context.Commnesals.SingleOrDefault(u => u.Username == user.UserName && u.Password == user.Password);
+                if (commensal != null)
+                {
+                    return Task.FromResult(new ClaimsIdentity(
+                      new GenericIdentity(commensal.Id.ToString(), "Token"),
+                      new[]
+                      {
+            new Claim("User", user.UserName)
+                      }));
+                }
+
+                // Credentials are invalid, or account doesn't exist
+                return Task.FromResult<ClaimsIdentity>(null);
             }
 
-            // Credentials are invalid, or account doesn't exist
-            return Task.FromResult<ClaimsIdentity>(null);
+            
         }
 
         [HttpGet]

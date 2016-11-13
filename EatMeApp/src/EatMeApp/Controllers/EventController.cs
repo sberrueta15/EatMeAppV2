@@ -21,111 +21,107 @@ namespace EatMeApp.Controllers
             _context = context;
         }
 
-        // GET: api/values
+        // GET: api/event
         [HttpGet]
         public List<Event> Get()
         {
             var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                var listaEventos = _context.Events.ToList();
-                return listaEventos;
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
+                {
+                    var listaEventos = _context.Events.ToList();
+                    return listaEventos;
+                }
             }
-            else
-            {
-                return null;
-            }
-
-
+            return null;
         }
 
-        // GET api/values/5
+        // GET api/event/5
         [HttpGet("{id}")]
         public Event Get(int id)
         {
             var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                try
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
                 {
-                    var evento = _context.Events.SingleOrDefault(x => x.Id == id);
-
-                    var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
-
-                    List<Commensal> listaDeCommensales = new List<Models.Commensal>();
-                    if (listaEventCommensal != null)
+                    try
                     {
-                        foreach (var item in listaEventCommensal)
+                        var evento = _context.Events.SingleOrDefault(x => x.Id == id);
+
+                        var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
+
+                        List<Commensal> listaDeCommensales = new List<Models.Commensal>();
+                        if (listaEventCommensal != null)
                         {
-                            var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == item.CommensalId);
-                            if (commensal != null)
+                            foreach (var item in listaEventCommensal)
                             {
-                                listaDeCommensales.Add(commensal);
+                                var commensal = _context.Commnesals.SingleOrDefault(x => x.Id == item.CommensalId);
+                                if (commensal != null)
+                                {
+                                    listaDeCommensales.Add(commensal);
+                                }
                             }
                         }
-                    }
 
-                    if (listaDeCommensales.Count > 0)
+                        if (listaDeCommensales.Count > 0)
+                        {
+                            evento.Commensals = listaDeCommensales;
+                        }
+
+                        return evento;
+
+
+                    }
+                    catch (Exception ex)
                     {
-                        evento.Commensals = listaDeCommensales;
+
+                        throw ex;
                     }
-
-                    return evento;
-
-                    
                 }
-                catch (Exception ex)
-                {
-
-                    throw ex;
-                }
-
             }
-            else
-            {
-                return null;
-            }
-
-
+            return null;
         }
 
         // POST api/values
-        [HttpPost("{idCooker}")]
+        [HttpPost("cooker/{idCooker}")]
         public void Post(int idCooker,[FromBody]Event evento)
         {
             var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                try
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
                 {
-                    var maxId = _context.Events.Max(x => x.Id);
-
-                    int id = maxId + 1;
-
-                    var cooker = _context.Cookers.SingleOrDefault(x => x.Id == idCooker);
-
-                    if (cooker == null)
+                    try
                     {
-                        return;
+                        var maxId = _context.Events.Max(x => x.Id);
+
+                        int id = maxId + 1;
+
+                        var cooker = _context.Cookers.SingleOrDefault(x => x.Id == idCooker);
+
+                        if (cooker == null)
+                        {
+                            return;
+                        }
+
+                        evento.Cooker = cooker;
+                        evento.Id = id;
+
+                        _context.Events.Add(evento);
+                        _context.SaveChanges();
                     }
-
-                    evento.Cooker = cooker;
-                    evento.Id = id;
-
-                    _context.Events.Add(evento);
-                    _context.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
-            else
-            {
-                return;
-            }
-
-            
+            return;
         }
 
         // PUT api/values/5
@@ -145,6 +141,8 @@ namespace EatMeApp.Controllers
                     eventt.TotalTickets = value.TotalTickets;
                     eventt.Description = value.Description;
                     eventt.FoodType = value.FoodType;
+                    eventt.startTime = value.startTime;
+                    eventt.endTime = value.endTime;
 
                     _context.SaveChanges();
                 }
@@ -225,34 +223,34 @@ namespace EatMeApp.Controllers
         public void Delete(int id)
         {
             var token = Request.Headers["Authorization"].ToString();
-            if (Authorizer.HasAccess(token, _context))
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                try
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
                 {
-                    var evento = _context.Events.SingleOrDefault(x => x.Id == id);
-
-                    var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
-
-                    foreach (var item in listaEventCommensal)
+                    try
                     {
-                        _context.EventCommnesals.Remove(item);
+                        var evento = _context.Events.SingleOrDefault(x => x.Id == id);
+
+                        var listaEventCommensal = _context.EventCommnesals.Where(x => x.EventId == id).ToList();
+
+                        foreach (var item in listaEventCommensal)
+                        {
+                            _context.EventCommnesals.Remove(item);
+                        }
+
+                        _context.Events.Remove(evento);
+                        _context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw ex;
                     }
 
-                    _context.Events.Remove(evento);
-                    _context.SaveChanges();
                 }
-                catch (Exception ex)
-                {
-
-                    throw ex;
-                }
-
             }
-            else
-            {
-                return;
-            }
-
+            return;
         }
     }
 }

@@ -11,9 +11,6 @@ namespace EatMeApp.Models
     public class Event
     {
 
-        [JsonProperty("cooker")]
-        public Cooker Cooker { get; set; }
-
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
@@ -41,8 +38,18 @@ namespace EatMeApp.Models
         [JsonProperty("locationY")]
         public double LocationY { get; set; }
 
-        [JsonProperty("commensals")]
+        [JsonProperty("startTime")]
+        public DateTime startTime { get; set; }
+
+        [JsonProperty("endTime")]
+        public DateTime endTime { get; set; }
+
+        [JsonIgnore]
+        [JsonProperty("cooker")]
+        public Cooker Cooker { get; set; }
+
         [NotMapped]
+        [JsonProperty("commensals")]
         public IEnumerable<Commensal> Commensals { get; set; }
     }
 

@@ -8,9 +8,10 @@ using EatMeApp.Models;
 namespace EatMeApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161112202608_Changes")]
+    partial class Changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
@@ -107,10 +108,6 @@ namespace EatMeApp.Migrations
                     b.Property<string>("Title");
 
                     b.Property<int>("TotalTickets");
-
-                    b.Property<DateTime>("endTime");
-
-                    b.Property<DateTime>("startTime");
 
                     b.HasKey("Id");
 
