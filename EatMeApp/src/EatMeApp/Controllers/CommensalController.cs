@@ -34,7 +34,7 @@ namespace EatMeApp.Controllers
         public Commensal Get(int id)
         {
             var token = Request.Headers["Authorization"].ToString();
-            if (!string.IsNullOrWhiteSpace(token))
+                 if (!string.IsNullOrWhiteSpace(token))
             {
                 token = token.Substring(7);
                 if (Authorizer.HasAccess(token, _context))
@@ -56,6 +56,37 @@ namespace EatMeApp.Controllers
             }
             return null;
         }
+
+        // GET api/values/5
+        [HttpGet("{id}/events")]
+        public List<Event> GetEvents(int id)
+        {
+            var token = Request.Headers["Authorization"].ToString();
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                token = token.Substring(7);
+                if (Authorizer.HasAccess(token, _context))
+                {
+                    try
+                    {
+
+                        var eventsId = _context.EventCommnesals.Where(x => x.CommensalId == id).Select(ev => ev.EventId);
+                        
+                        var e = _context.Events.Where(x => eventsId.Contains(x.Id)).ToList();
+                        
+                        return e;
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw ex;
+                    }
+                }
+            }
+            return null;
+        }
+
 
         // POST api/values
         [HttpPost]
