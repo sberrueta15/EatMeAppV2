@@ -8,17 +8,17 @@ namespace EatMeApp.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Commnesals_Events_EventId",
-                table: "Commnesals");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_Commnesals_Events_EventId",
+            //    table: "Commnesals");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Commnesals_EventId",
-                table: "Commnesals");
+            //migrationBuilder.DropIndex(
+            //    name: "IX_Commnesals_EventId",
+            //    table: "Commnesals");
 
-            migrationBuilder.DropColumn(
-                name: "EventId",
-                table: "Commnesals");
+            //migrationBuilder.DropColumn(
+            //    name: "EventId",
+            //    table: "Commnesals");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
