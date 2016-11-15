@@ -12,11 +12,11 @@ namespace EatMeApp.Models
         public int Id { get; set; }
 
         [Required]
-        [JsonProperty("nombre")]
+        [JsonProperty("name")]
         public string FirstName { get; set; }
 
         [Required]
-        [JsonProperty("apellido")]
+        [JsonProperty("last")]
         public string LastName { get; set; }
 
         [EmailAddress]
@@ -30,18 +30,18 @@ namespace EatMeApp.Models
         [JsonProperty("cedula")]
         public string IdentityCard { get; set; }
 
-        [JsonProperty("direccion")]
+        [JsonProperty("address")]
         public string Address { get; set; }
 
         [JsonProperty("codigo_postal")]
         public int PostalCode { get; set; }
         
         [Required]
-        [JsonProperty("usuario")]
+        [JsonProperty("username")]
         public string Username { get; set; }
 
         [Required]
-        [JsonProperty("contraseña")]
+        [JsonProperty("password")]
         public string Password { get; set; }
 
         //[JsonProperty("Events")]
